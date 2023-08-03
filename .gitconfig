@@ -1,0 +1,9 @@
+[user]
+	email = max@dollinger.dev
+	name = Maximilian Dollinger
+[core]
+	excludesfile = /Users/maximiliandollinger/.gitignore_global
+[commit]
+	template = /Users/maximiliandollinger/.stCommitMsg
+[push]
+	default = current
