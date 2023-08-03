@@ -4,9 +4,6 @@ export EDITOR='nvim'
 
 export PATH="$HOME/go/bin:$PATH"
 export PATH="/Users/maximiliandollinger/bin:/Users/maximiliandollinger/.local/bin:$PATH"
-export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
-
-eval "$(tmuxifier init -)"
 
 [ -f "/Users/maximiliandollinger/.ghcup/env" ] && source "/Users/maximiliandollinger/.ghcup/env" # ghcup-env
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
