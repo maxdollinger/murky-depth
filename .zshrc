@@ -1,4 +1,4 @@
-neofetch
+# neofetch
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
@@ -9,10 +9,7 @@ unsetopt autocd notify
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/max/.zshrc'
 
-autoload -Uz compinit
-compinit
 # End of lines added by compinstall
 
 alias vim='nvim'
@@ -41,10 +38,6 @@ fzfcd () {
     cd $(find . -type d 2>/dev/null | fzf --reverse) 
 }
 
-export s2B () {
-[ -z "$(ps -aux | pgrep firefox)" ] && (MESA_DEBUG=silent firefox&) || wmctrl -a firefox
-}
-
 alias lf='lfcd'
 bindkey -s '^e' 'lfcd\n'
 bindkey -s '^f' 'fzfcd\n'
@@ -69,3 +62,8 @@ zplug load
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#Attach to tmux on startup
+if [ -z $TMUX ]; then
+    tmux attach || tmux
+fi
