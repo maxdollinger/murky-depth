@@ -1,21 +1,17 @@
 # neofetch
 
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 setopt extendedglob nomatch
 unsetopt autocd notify
 bindkey -v
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
 
-# End of lines added by compinstall
 
 alias vim='nvim'
-
 export EDITOR='nvim'
-export PATH="/usr/share:$PATH"
+
+export PATH="$PATH:/usr/share"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
