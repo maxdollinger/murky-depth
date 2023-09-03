@@ -25,10 +25,9 @@ echo $delim
 read -p "Download and install dot-files? [y/n] " sin
 if [ $sin == "y" ]; then
     git clone https://github.com/maxdollinger/murky-depth.git ~/murky-depth
-    cp -a ~/murky-depth/configs/* ~/.config/
-    chmod +x ~/.config/tmux/plugins/catppuccin/catppuccin.tmux
-    cp -a ~/murky-depth/.zsh/ ~/
-    cp  ~/murky-depth/.zshrc ~/
+    cp -ar ~/murky-depth/configs/* ~/.config/
+    cp -ar ~/murky-depth/.zsh/ ~/
+    cp -a  ~/murky-depth/.zshrc ~/
     rm -rf ~/murky-depth
     echo "source ~/.zsh/settings.zsh" >> ~/.zshrc
 fi
