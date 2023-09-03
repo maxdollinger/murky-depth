@@ -104,18 +104,15 @@ if [ -z "$(command -v nvm)" ]; then
 echo $delim
 fi
 
-if [ -z "$(command -v go)" ]; then
-    read -p "Install go? [y/n] " sin
-    if [ $sin == "y" ]; then
-        cd ~/Downloads
-        sudo rm -rf /usr/local/go
-        curl -o- https://dl.google.com/go/go1.21.0.linux-amd64.tar.gz | sudo tar -C /usr/local -xz 
-        echo "export PATH=\$PATH:/usr/local/go/bin" >> $HOME/.zshrc
-        source ~/.zshrc 2> /dev/null
-        go version
-    fi
-    echo $delim
+read -p "Install or update go? [y/n] " sin
+if [ $sin == "y" ]; then
+    sudo rm -rf /usr/local/go
+    curl -o- https://dl.google.com/go/go1.21.0.linux-amd64.tar.gz | sudo tar -C /usr/local -xz 
+    echo "export PATH=\$PATH:/usr/local/go/bin" >> $HOME/.zshrc
+    source ~/.zshrc 2> /dev/null
+    go version
 fi
+echo $delim
 
 
 read -p "Apply gnome settings? [y/n] " sin
