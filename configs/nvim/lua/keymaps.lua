@@ -22,6 +22,7 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "moves selected text down"
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "moves selected text up" })
 
 vim.keymap.set("n", "<leader>e", ":Neotree toggle=true<cr>", { silent = true, desc = "NeoTr[e]e" })
+vim.keymap.set("n", "<leader>E", ":Neotree toggle=true source=buffers<cr>", { silent = true, desc = "NeoTr[e]e" })
 vim.keymap.set("n", "<leader>w", vim.cmd.w, { silent = true, desc = "[W]rite buffer" })
 vim.keymap.set("i", "<c-j>", "<down>", { silent = true })
 vim.keymap.set("i", "<c-k>", "<up>", { silent = true })
