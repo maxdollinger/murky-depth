@@ -4,7 +4,7 @@ delim="----------------------------------"
 
 read -p "Install packages? [y/n] " sin
 if [ $sin == "y" ]; then
-    pkgs="zsh lf fzf tmux neovim lazygit"
+    pkgs="zsh lf fzf tmux neovim lazygit jq"
     sudo zypper refresh
     for i in $pkgs; do
         [[ -n "$(command -v $i)" ]] && continue 
@@ -24,39 +24,79 @@ echo $delim
 
 read -p "Download and install dot-files? [y/n] " sin
 if [ $sin == "y" ]; then
-    mv -f ./murky-depth/config/{.,}* ~/.config/
-    mv -f ./murky-depth/.zsh/{.,}* ~/.zsh/
-    mv -f ./murky-depth/.zshrc ~/
+    git clone https://github.com/maxdollinger/murky-depth.git ~/murky-depth
+    cp -a ~/murky-depth/configs/* ~/.config/
+    chmod +x ~/.config/tmux/plugins/catppuccin/catppuccin.tmux
+    cp -a ~/murky-depth/.zsh/ ~/
+    cp  ~/murky-depth/.zshrc ~/
+    rm -rf ~/murky-depth
     echo "source ~/.zsh/settings.zsh" >> ~/.zshrc
-    rm -rf murky-depth
-    source ~/.zshrc
 fi
 echo $delim
 
 if [ -n "$(command -v zsh)" ]; then
     read -p "Install zsh plugins? [y/n] " sin
     if [ $sin == "y" ]; then
-        echo "installing powerlevel10k"
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh/plugins/powerlevel10k
-        echo 'source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
-        echo '[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh' >> ~/.zshrc
 
-        git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ~/.zsh/plugins/catppuccin
-        echo 'source ~/.zsh/plugins/catppuccin/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh' >>~/.zshrc
+        if [ -d ~/.zsh/plugins/powerlevel10k ]; then
+            echo "update powerlevel10k"
+            git -C ~/.zsh/plugins/powerlevel10k fetch
+            git -C ~/.zsh/plugins/powerlevel10k pull
+        else
+            echo "installing powerlevel10k"
+            git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh/plugins/powerlevel10k
+            echo 'source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+            echo '[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh' >> ~/.zshrc
+        fi
 
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
-        echo 'source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' >> ~/.zshrc
+        if [ -d ~/.zsh/plugins/catppuccin ]; then
+            echo "update catppuccin"
+            git -C ~/.zsh/plugins/catppuccin fetch
+            git -C ~/.zsh/plugins/catppuccin pull
+        else
+            echo "installing catppuccin"
+            git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ~/.zsh/plugins/catppuccin
+            echo 'source ~/.zsh/plugins/catppuccin/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh' >>~/.zshrc
+        fi
 
-        echo  "[[ -z \$TMUX ]] && (tmux attach || tmux)" >> ~/.zshrc
+        if [ -d ~/.zsh/plugins/zsh-syntax-highlighting ]; then
+            echo "update zsh-syntax-highlighting"
+            git -C ~/.zsh/plugins/zsh-syntax-highlighting fetch
+            git -C ~/.zsh/plugins/zsh-syntax-highlighting pull
+        else
+            echo "installing syntax-highlighting"
+            git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
+            echo 'source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' >> ~/.zshrc
+        fi
+
+        if [ -n "$(command -v tmux)" ]; then
+            [[ -z "$(cat ~/.zshrc | grep 'tmux attach')" ]] && echo  "[[ -z \$TMUX ]] && (tmux attach || tmux) || echo ''" >> ~/.zshrc
+        fi
     fi
     echo $delim
 fi
+
+read -p "Install gnome extentions? [y/n] " sin
+if [ $sin == "y" ]; then
+    ext="run-or-raise@edvard.cz Vitals@CoreCoding.com gnome-clipboard@b00f.github.io blur-my-shell@aunetx"
+
+    for i in $ext; do
+        vs=$(curl -Lfs "https://extensions.gnome.org/extension-query/?search=${i}" | jq '.extensions[0].shell_version_map | map(.version) | max')
+        name="$(echo $i | sed 's/@//')"
+        url="https://extensions.gnome.org/extension-data/${name}.v${vs}.shell-extension.zip"
+        curl $url --output "${i}.zip"
+        gnome-extensions install --force "${i}.zip"
+        gnome-extensions enable ${i}
+        rm "${i}.zip"
+    done
+fi
+echo $delim
 
 if [ -z "$(command -v nvm)" ]; then
     read -p "Install NodeVersionManager nvm? [y/n] " sin
     if [ $sin == "y" ]; then
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-        source ~/.zshrc
+        source ~/.zshrc 2> /dev/null
         read -p "Install Typescript globaly? [y/n] " sin
         if [ $sin == "y" ]; then
             npm install -g typescript
@@ -72,21 +112,12 @@ if [ -z "$(command -v go)" ]; then
         sudo rm -rf /usr/local/go
         curl -o- https://dl.google.com/go/go1.21.0.linux-amd64.tar.gz | sudo tar -C /usr/local -xz 
         echo "export PATH=\$PATH:/usr/local/go/bin" >> $HOME/.zshrc
-        source ~/.zshrc
+        source ~/.zshrc 2> /dev/null
         go version
     fi
     echo $delim
 fi
 
-read -p "Install gnome extentions? [y/n] " sin
-if [ $sin == "y" ]; then
-   path="~/.local/share/gnome-shell/extensions" 
-   git clone https://github.com/CZ-NIC/run-or-raise.git "$path/run-or-raise@edvard.cz"
-   git clone https://github.com/corecoding/Vitals "$path/Vitals@CoreCoding.com"
-   git clone https://github.com/b00f/gnome-clipboard "$path/gnome-clipboard@b00f.github.io"
-   git clone https://github.com/aunetx/gnome-shell-extension-blur-my-shell "$path/blur-my-shell@aunetx"
-fi
-echo $delim
 
 read -p "Apply gnome settings? [y/n] " sin
 echo $delim
