@@ -4,16 +4,21 @@ delim="----------------------------------"
 
 read -p "Install packages? [y/n] " sin
 if [ $sin == "y" ]; then
-    pkgs="zsh lf fzf tmux neovim lazygit jq"
+    pkgs="zsh kitty lf fzf tmux neovim lazygit jq"
     for i in $pkgs; do
         [[ -n "$(command -v $i)" ]] && continue 
         
         sudo pacman -S $i
-        [[ $i == ¨zsh" ]] && chsh -s $(`which zsh`) $USER
         echo $delim
     done
 fi
 echo $delim
+
+if [ -n "$(command -v zsh)" ]; then
+    read -p ¨Make zsh default? [y/n]" sin
+    [[ $sin == "y" ]] && chsh -s $(`which zsh`) $USER
+fi
+        
 
 read -p "Download and install dot-files? [y/n] " sin
 if [ $sin == "y" ]; then
