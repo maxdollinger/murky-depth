@@ -66,10 +66,6 @@ if [ -n "$(command -v zsh)" ]; then
             git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
             echo 'source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' >> ~/.zshrc
         fi
-
-        if [ -n "$(command -v tmux)" ]; then
-            [[ -z "$(cat ~/.zshrc | grep 'tmux attach')" ]] && echo  "[[ -z \$TMUX ]] && (tmux attach || tmux) || echo ''" >> ~/.zshrc
-        fi
     fi
     echo $delim
 fi
