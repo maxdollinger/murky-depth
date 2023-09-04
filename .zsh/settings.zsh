@@ -21,6 +21,11 @@ fzfcd () {
     cd $(find . -type d 2>/dev/null | fzf --reverse) 
 }
 
+otmux () {
+    [[ -z $TMUX ]] && (tmux attach || tmux) || echo ''
+}
+
+bindkey -s '^t' 'otmux\n'
 bindkey -s '^e' 'lfcd\n'
 bindkey -s '^f' 'fzfcd\n'
 bindkey -s '^o' 'nvim .\n'
