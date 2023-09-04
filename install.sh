@@ -134,4 +134,8 @@ if [ $sin == "y" ]; then
     gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
 
     gsettings set org.gnome.desktop.interface color-scheme ¨prefer-dark¨
+    
+    gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+    gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+    gsettings set org.gnome.desktop.peripherals.touchpad speed 0.5
 fi
