@@ -117,19 +117,21 @@ echo $delim
 read -p "Apply gnome settings? [y/n] " sin
 echo $delim
 if [ $sin == "y" ]; then
-    gsettings org.gnome.mutter dynamic-workspaces False
-    gsettings org.gnome.desktop.wm.preferences num-workspaces 6
+    gsettings set org.gnome.mutter dynamic-workspaces False
+    gsettings set org.gnome.desktop.wm.preferences num-workspaces 6
     ks="1 2 3 4 5 6"
     for i in $ks; do
         gsettings set org.gnome.desktop.wm.keybindings "switch-to-workspace-$i" "['<Alt>$i']"
         gsettings set org.gnome.desktop.wm.keybindings "move-to-workspace-$i" "['<Alt>$i']"
     done
 
-    gsettings org.gnome.desktop.wm.keybindings close "['<Alt>q']"
-    gsettings org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt>m']"
+    gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>q']"
+    gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt>m']"
 
-    gsettings org.gnome.mutter.keybindings toggle-tiled-left "['<Alt>h']"
-    gsettings org.gnome.mutter.keybindings toggle-tiled-right "['<Alt>l']"
+    gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Alt>h']"
+    gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Alt>l']"
 
-    gsettings org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+    gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+
+    gsettings set org.gnome.desktop.interface color-scheme ¨prefer-dark¨
 fi
