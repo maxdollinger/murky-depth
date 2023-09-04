@@ -5,18 +5,11 @@ delim="----------------------------------"
 read -p "Install packages? [y/n] " sin
 if [ $sin == "y" ]; then
     pkgs="zsh lf fzf tmux neovim lazygit jq"
-    sudo zypper refresh
     for i in $pkgs; do
         [[ -n "$(command -v $i)" ]] && continue 
-
-        zypper se -xs $i
-        read -p "install $i? [y/n] " sin
-        if [ $sin != "y" ]; then
-            echo "skipping install of $i"
-            echo $delim
-            continue
-        fi
-        sudo zypper in $i
+        
+        sudo pacman -S $i
+        [[ $i == ¨zsh" ]] && chsh -s $(`which zsh`) $USER
         echo $delim
     done
 fi
@@ -26,6 +19,7 @@ read -p "Download and install dot-files? [y/n] " sin
 if [ $sin == "y" ]; then
     git clone https://github.com/maxdollinger/murky-depth.git ~/murky-depth
     cp -ar ~/murky-depth/configs/* ~/.config/
+    chmod +x ~/.config/tmux/plugins/catppuccin/catppuccin.tmux
     cp -ar ~/murky-depth/.zsh/ ~/
     cp -a  ~/murky-depth/.zshrc ~/
     rm -rf ~/murky-depth
