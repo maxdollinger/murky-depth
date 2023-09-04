@@ -91,7 +91,7 @@ fi
 echo $delim
 
 if [ -z "$(command -v nvm)" ]; then
-    read -p "Install NodeVersionManager nvm? [y/n] " sin
+    read -p "Install node and nvm? [y/n] " sin
     if [ $sin == "y" ]; then
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
         source ~/.zshrc 2> /dev/null
