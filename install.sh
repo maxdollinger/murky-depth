@@ -122,7 +122,7 @@ if [ $sin == "y" ]; then
     ks="1 2 3 4 5 6"
     for i in $ks; do
         gsettings set org.gnome.desktop.wm.keybindings "switch-to-workspace-$i" "['<Alt>$i']"
-        gsettings set org.gnome.desktop.wm.keybindings "move-to-workspace-$i" "['<Alt>$i']"
+        gsettings set org.gnome.desktop.wm.keybindings "move-to-workspace-$i" "['<Alt><Shift>$i']"
     done
 
     gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>q']"
