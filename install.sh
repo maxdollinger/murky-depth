@@ -95,6 +95,7 @@ if [ -z "$(command -v nvm)" ]; then
     if [ $sin == "y" ]; then
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
         source ~/.zshrc 2> /dev/null
+        nvm install node
         read -p "Install Typescript globaly? [y/n] " sin
         if [ $sin == "y" ]; then
             npm install -g typescript
