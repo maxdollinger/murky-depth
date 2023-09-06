@@ -12,13 +12,7 @@ if [ $sin == "y" ]; then
         echo $delim
     done
 fi
-echo $delim
-
-if [ -n "$(command -v zsh)" ]; then
-    read -p ¨Make zsh default? [y/n]" sin
-    [[ $sin == "y" ]] && chsh -s $(`which zsh`) $USER
-fi
-        
+echo $delim      
 
 read -p "Download and install dot-files? [y/n] " sin
 if [ $sin == "y" ]; then
@@ -33,9 +27,11 @@ fi
 echo $delim
 
 if [ -n "$(command -v zsh)" ]; then
-    read -p "Install zsh plugins? [y/n] " sin
+    read -p "Setup zsh? [y/n] " sin
     if [ $sin == "y" ]; then
-
+    
+        chsh -s $(`which zsh`) $USER
+        
         if [ -d ~/.zsh/plugins/powerlevel10k ]; then
             echo "update powerlevel10k"
             git -C ~/.zsh/plugins/powerlevel10k fetch
