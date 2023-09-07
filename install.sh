@@ -14,25 +14,6 @@ if [ $sin == "y" ]; then
 fi
 echo $delim
 
-read -p "Install lf and lazygit from source? [y/n] " sin
-if [ $sin == "y" ]; then
-    version="$(curl --location --head https://github.com/gokcehan/lf/releases/latest | grep -i location: | sed 's/^.*\/tag\/\([^\/]*\)\r$/\1/')"
-    curl -L "https://github.com/gokcehan/lf/releases/download/${version}/lf-linux-amd64.tar.gz" | sudo tar -xz -C /usr/local/bin/
-    
-    version="$(curl --location --head https://github.com/jesseduffield/lazygit/releases/latest | grep -i location: | sed 's/^.*\/tag\/\([^\/]*\)\r$/\1/' | sed 's/v//')"
-    if [ -n "$(command -v lazygit)" ]; then
-        e_vs="$(lazygit -version | sed 's/.*version=\([0-9.]*\),.*/\1/')"
-        echo "lazygit version $e_vs installed removing install"
-        sudo rm -f $(which lazygit)
-    fi
-    dir="${HOME}/Downloads/lazygit_${version}"
-    mkdir $dir
-    curl -L "https://github.com/jesseduffield/lazygit/releases/download/v${version}/lazygit_${version}_Linux_x86_64.tar.gz" | tar -xz -C $dir
-    sudo cp -a "${dir}/lazygit" /usr/local/bin/
-    rm -rf $dir
-fi
-echo $delim
-
 read -p "Install FiraCode Nerd Font? [y/n] " sin
 if [ $sin == "y" ]; then
     curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip -o ~/Downloads/FiraCode.zip
