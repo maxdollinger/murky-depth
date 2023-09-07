@@ -4,13 +4,17 @@ delim="----------------------------------"
 
 read -p "Install packages? [y/n] " sin
 if [ $sin == "y" ]; then
-    pkgs="zsh kitty lf fzf tmux neovim lazygit jq ttf-firacode-nerd"
+    pkgs="zsh kitty fzf tmux neovim jq"
     for i in $pkgs; do
         [[ -n "$(command -v $i)" ]] && continue 
         
-        sudo pacman -S $i
+        sudo dnf install $i
         echo $delim
     done
+    sudo dnf copr enable pennbauman/ports -y
+    sudo dnf install lf
+    sudo dnf copr enable atim/lazygit -y
+    sudo dnf install lazygit
 fi
 echo $delim
 
@@ -39,6 +43,8 @@ if [ -n "$(command -v zsh)" ]; then
     if [ $sin == "y" ]; then
     
         chsh -s $(`which zsh`) $USER
+
+        [[ ! -d ~/.zsh/plugins ]] && mkdir -p ~/.zsh/plugins
         
         if [ -d ~/.zsh/plugins/powerlevel10k ]; then
             echo "update powerlevel10k"
@@ -74,22 +80,6 @@ if [ -n "$(command -v zsh)" ]; then
     echo $delim
 fi
 
-read -p "Install gnome extentions? [y/n] " sin
-if [ $sin == "y" ]; then
-    ext="run-or-raise@edvard.cz Vitals@CoreCoding.com gnome-clipboard@b00f.github.io blur-my-shell@aunetx"
-
-    for i in $ext; do
-        vs=$(curl -Lfs "https://extensions.gnome.org/extension-query/?search=${i}" | jq '.extensions[0].shell_version_map | map(.version) | max')
-        name="$(echo $i | sed 's/@//')"
-        url="https://extensions.gnome.org/extension-data/${name}.v${vs}.shell-extension.zip"
-        curl $url --output "${i}.zip"
-        gnome-extensions install --force "${i}.zip"
-        gnome-extensions enable ${i}
-        rm "${i}.zip"
-    done
-fi
-echo $delim
-
 if [ -z "$(command -v nvm)" ]; then
     read -p "Install node and nvm? [y/n] " sin
     if [ $sin == "y" ]; then
@@ -114,6 +104,21 @@ if [ $sin == "y" ]; then
 fi
 echo $delim
 
+read -p "Install gnome extentions? [y/n] " sin
+if [ $sin == "y" ]; then
+    ext="run-or-raise@edvard.cz Vitals@CoreCoding.com gnome-clipboard@b00f.github.io blur-my-shell@aunetx"
+
+    for i in $ext; do
+        vs=$(curl -Lfs "https://extensions.gnome.org/extension-query/?search=${i}" | jq '.extensions[0].shell_version_map | map(.version) | max')
+        name="$(echo $i | sed 's/@//')"
+        url="https://extensions.gnome.org/extension-data/${name}.v${vs}.shell-extension.zip"
+        curl $url --output "${i}.zip"
+        gnome-extensions install --force "${i}.zip"
+        gnome-extensions enable ${i}
+        rm "${i}.zip"
+    done
+fi
+echo $delim
 
 read -p "Apply gnome settings? [y/n] " sin
 echo $delim
