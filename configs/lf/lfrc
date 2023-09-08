@@ -44,11 +44,13 @@ map O $mimeopen --ask $f
 # use either file extensions and/or mime types here. Below uses an editor for
 # text files and a file opener for the rest.
 cmd open &{{
-    case $(file --mime-type -Lb $f) in
-        text/*) lf -remote "send $id \$nvim \$fx";;
-        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
-    esac
+    if [ -n "$(file $f | grep 'text\|empty')" ]; then
+        lf -remote "send $id \$nvim \$fx" 
+    else
+        for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done
+    fi
 }}
+
 
 # mkdir command. See wiki if you want it to select created dir
 map a :push %mkdir<space>
