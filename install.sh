@@ -37,7 +37,7 @@ if [ -n "$(command -v zsh)" ]; then
     read -p "Setup zsh? [y/n] " sin
     if [ $sin == "y" ]; then
     
-        chsh -s $(`which zsh`) $USER
+        sudo chsh -s $(which zsh) $USER
 
         [[ ! -d ~/.zsh/plugins ]] && mkdir -p ~/.zsh/plugins
         
