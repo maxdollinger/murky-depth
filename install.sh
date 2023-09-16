@@ -13,14 +13,6 @@ if [ $sin == "y" ]; then
 fi
 echo $delim
 
-read -p "Install FiraCode Nerd Font? [y/n] " sin
-if [ $sin == "y" ]; then
-    curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip -o ~/Downloads/FiraCode.zip
-    sudo unzip ~/Downloads/FiraCode.zip -d /usr/share/fonts/FiraCode-Nerd-Font/
-    rm -f ~/Downloads/FiraCode.zip
-fi
-echo $delim
-
 read -p "Download and install dot-files? [y/n] " sin
 if [ $sin == "y" ]; then
     git clone https://github.com/maxdollinger/murky-depth.git ~/murky-depth
