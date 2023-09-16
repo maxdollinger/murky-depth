@@ -118,7 +118,7 @@ echo $delim
 read -p "Apply gnome settings? [y/n] " sin
 echo $delim
 if [ $sin == "y" ]; then
-    gsettings set org.gnome.mutter dynamic-workspaces False
+    gsettings set org.gnome.mutter dynamic-workspaces false
     gsettings set org.gnome.desktop.wm.preferences num-workspaces 6
     ks="1 2 3 4 5 6"
     for i in $ks; do
