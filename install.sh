@@ -4,17 +4,12 @@ delim="----------------------------------"
 
 read -p "Install packages? [y/n] " sin
 if [ $sin == "y" ]; then
-    pkgs="zsh kitty fzf tmux neovim jq"
+    pkgs="zsh kitty lf lazygit fzf tmux neovim jq otf-firamono-nerd"
     for i in $pkgs; do
         [[ -n "$(command -v $i)" ]] && continue 
         
-        sudo dnf install $i
-        echo $delim
+        sudo pacman -S $i
     done
-    sudo dnf copr enable pennbauman/ports -y
-    sudo dnf install lf
-    sudo dnf copr enable atim/lazygit -y
-    sudo dnf install lazygit
 fi
 echo $delim
 
