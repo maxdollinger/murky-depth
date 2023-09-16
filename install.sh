@@ -4,7 +4,7 @@ delim="----------------------------------"
 
 read -p "Install packages? [y/n] " sin
 if [ $sin == "y" ]; then
-    pkgs="zsh kitty lf lazygit fzf tmux neovim jq otf-firamono-nerd"
+    pkgs="zsh kitty lf lazygit fzf tmux neovim jq wl-clipboard otf-firamono-nerd"
     for i in $pkgs; do
         [[ -n "$(command -v $i)" ]] && continue 
         
