@@ -10,7 +10,7 @@ return {
                 light = "latte",
                 dark = "frappe",
             },
-            transparent_background = false,
+            transparent_background = true,
             integrations = {
                 cmp = true,
                 gitsigns = true,
