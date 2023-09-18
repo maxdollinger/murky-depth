@@ -25,6 +25,16 @@ if [ $sin == "y" ]; then
 fi
 echo $delim
 
+read -p "Download EOS Wallpapers? [y/n] " sin
+if [ $sin == "y" ]; then
+    curl -L https://github.com/EndeavourOS-Community-Editions/Community-wallpapers/archive/refs/heads/main.zip -o ~/Downloads/ebg.zip
+    unzip -j ~/Downloads/ebg.zip -d ~/.local/share/backgrounds/
+    rm -rf ~/Downloads/ebg.zip
+    gsettings set org.gnome.desktop.background picture-uri-dark "'file://$HOME/.local/share/backgrounds/EOS-SPACE-4K.png'"
+    gsettings set org.gnome.desktop.background picture-uri "'file://$HOME/.local/share/backgrounds/EOS-SPACE-4K.png'"
+fi
+echo $delim
+
 if [ -n "$(command -v zsh)" ]; then
     read -p "Setup zsh? [y/n] " sin
     if [ $sin == "y" ]; then
