@@ -12,7 +12,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/go/bin
-export AAX2MP3_AUTHCODE="afa70a07"
 
 source ~/.zsh/settings.zsh
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
