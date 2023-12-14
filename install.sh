@@ -90,3 +90,11 @@ if [ $sin == "y" ]; then
     go version
 fi
 echo $delim
+
+if [ -n "$(command -v zsh)" ]; then
+    read -p "Install Haskell? [y/n] " sin
+    if [ $sin == "y" ]; then
+        curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+    fi
+    echo $delim
+fi
