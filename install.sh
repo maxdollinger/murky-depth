@@ -2,12 +2,19 @@
 
 delim="----------------------------------"
 
+if [ -n "$(command -v brew)" ]; then
+    read -p "Install homebrew? [y/n] " sin
+    if [ $sin == "y" ]; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    echo $delim 
+fi
+
 read -p "Install packages? [y/n] " sin
 if [ $sin == "y" ]; then
-    pkgs="kitty lf lazygit fzf tmux neovim jq"
+    sudo brew install --cask kitty
+    pkgs="lf lazygit fzf tmux neovim jq"
     for i in $pkgs; do
-        [[ -n "$(command -v $i)" ]] && continue 
-        
         sudo brew install $i
     done
 fi
@@ -25,30 +32,29 @@ if [ $sin == "y" ]; then
 fi
 echo $delim
 
-if [ -n "$(command -v zsh)" ]; then
-    read -p "Setup zsh? [y/n] " sin
-    if [ $sin == "y" ]; then
+read -p "Setup zsh? [y/n] " sin
+if [ $sin == "y" ]; then
     
-        sudo chsh -s $(which zsh) $USER
+    sudo chsh -s $(which zsh) $USER
 
-        [[ ! -d ~/.zsh/plugins ]] && mkdir -p ~/.zsh/plugins
+    [[ ! -d ~/.zsh/plugins ]] && mkdir -p ~/.zsh/plugins
         
-        if [ -d ~/.zsh/plugins/powerlevel10k ]; then
-            echo "update powerlevel10k"
-            git -C ~/.zsh/plugins/powerlevel10k fetch
-            git -C ~/.zsh/plugins/powerlevel10k pull
-        else
-            echo "installing powerlevel10k"
-            git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh/plugins/powerlevel10k
-            echo 'source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
-            echo '[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh' >> ~/.zshrc
-        fi
+    if [ -d ~/.zsh/plugins/powerlevel10k ]; then
+        echo "update powerlevel10k"
+        git -C ~/.zsh/plugins/powerlevel10k fetch
+        git -C ~/.zsh/plugins/powerlevel10k pull
+    else
+        echo "installing powerlevel10k"
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh/plugins/powerlevel10k
+        echo 'source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+        echo '[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh' >> ~/.zshrc
+    fi
 
-        if [ -d ~/.zsh/plugins/catppuccin ]; then
-            echo "update catppuccin"
-            git -C ~/.zsh/plugins/catppuccin fetch
-            git -C ~/.zsh/plugins/catppuccin pull
-        else
+    if [ -d ~/.zsh/plugins/catppuccin ]; then
+        echo "update catppuccin"
+        git -C ~/.zsh/plugins/catppuccin fetch
+        git -C ~/.zsh/plugins/catppuccin pull
+    else
             echo "installing catppuccin"
             git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ~/.zsh/plugins/catppuccin
             echo 'source ~/.zsh/plugins/catppuccin/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh' >>~/.zshrc
@@ -65,7 +71,6 @@ if [ -n "$(command -v zsh)" ]; then
         fi
     fi
     echo $delim
-fi
 
 if [ -z "$(command -v nvm)" ]; then
     read -p "Install node and nvm? [y/n] " sin
