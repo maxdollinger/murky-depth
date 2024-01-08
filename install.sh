@@ -13,7 +13,7 @@ fi
 read -p "Install packages? [y/n] " sin
 if [ $sin == "y" ]; then
     sudo brew install --cask kitty
-    pkgs="lf lazygit fzf tmux neovim jq"
+    pkgs="lf lazygit fzf tmux neovim jq ripgrep"
     for i in $pkgs; do
         sudo brew install $i
     done
