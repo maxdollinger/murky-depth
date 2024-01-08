@@ -2,7 +2,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set({ "i", "v", "n" }, "<c-c>", "<Esc>", { silent = true, desc = "get me outa here" })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
@@ -21,8 +20,7 @@ vim.keymap.set("n", "O", 'o<Esc>0"_D', { silent = true, desc = "inserts new empt
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "moves selected text down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "moves selected text up" })
 
-vim.keymap.set("n", "<leader>e", ":Neotree toggle=true<cr>", { silent = true, desc = "NeoTr[e]e" })
-vim.keymap.set("n", "<leader>E", ":Neotree toggle=true source=buffers<cr>", { silent = true, desc = "NeoTr[e]e" })
+vim.keymap.set("n", "<leader>e", ":Ex<cr>", { silent = true, desc = "[E]xplorer" })
 vim.keymap.set("n", "<leader>w", vim.cmd.w, { silent = true, desc = "[W]rite buffer" })
 vim.keymap.set("i", "<c-j>", "<down>", { silent = true })
 vim.keymap.set("i", "<c-k>", "<up>", { silent = true })
@@ -31,4 +29,4 @@ vim.keymap.set("i", "<c-l>", "<right>", { silent = true })
 vim.keymap.set({ "v", "n" }, "p", [["0P]], { silent = true })
 vim.keymap.set({ "v" }, "Y", [["+y]], { silent = true })
 
-vim.keymap.set("n", "<leader>q", "<cmd>confirm q<cr>", { silent = true, desc = "[Q]uit buffer" })
+vim.keymap.set("n", "<leader><esc>", "<cmd>confirm q<cr>", { silent = true, desc = "[Q]uit buffer" })
