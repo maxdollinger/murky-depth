@@ -2,16 +2,15 @@
 
 delim="----------------------------------"
 
-if [ -n "$(command -v brew)" ]; then
-    read -p "Install homebrew? [y/n] " sin
-    if [ $sin == "y" ]; then
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-    echo $delim 
-fi
-
 read -p "Install apps? [y/n] " sin
 if [ $sin == "y" ]; then
+    if [ -n "$(command -v brew)" ]; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo $delim 
+    fi
+
+    source ~/.zshrc 2> /dev/null
+
     sudo brew install --cask kitty
     pkgs="lf lazygit fzf tmux neovim jq ripgrep"
     for i in $pkgs; do
