@@ -6,7 +6,6 @@ return {
         require('catppuccin').setup({
             flavour = "frappe", -- latte, frappe, macchiato, mocha
             background = {
-                -- :h background
                 light = "latte",
                 dark = "frappe",
             },
@@ -14,9 +13,14 @@ return {
             integrations = {
                 cmp = true,
                 gitsigns = true,
-                nvimtree = true,
                 telescope = true,
-            }
+            },
+            custom_highlights = function(colors)
+                return {
+                    LineNr = { fg = colors.subtext1 },
+                    Visual = { bg = colors.text, fg = colors.base },
+                }
+            end
         })
 
         vim.cmd.colorscheme 'catppuccin'
