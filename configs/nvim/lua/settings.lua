@@ -1,6 +1,6 @@
 vim.wo.number = true
-vim.o.relativenumber = true
 vim.o.mouse = 'a'
+vim.o.cursorline = true
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -41,7 +41,6 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
 vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.g.netrw_liststyle = 3
