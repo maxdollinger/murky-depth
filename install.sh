@@ -20,6 +20,15 @@ if [ $sin == "y" ]; then
 fi
 echo $delim
 
+read -p "Install FiraCode NerdFont? [y/n] " sin
+if [ $sin == "y" ]; then
+    dir="$HOME/Library/Fonts" 
+    curl --output-dir "$dir" -O -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip
+    unzip "$dir/FiraCode.zip" -d "$dir/FiraCode"
+    rm -rf "$dir/FiraCode.zip" 
+fi
+echo $delim
+
 read -p "Download and install dot-files? [y/n] " sin
 if [ $sin == "y" ]; then
     git clone https://github.com/maxdollinger/murky-depth.git ~/murky-depth
@@ -71,14 +80,14 @@ fi
 echo $delim
 
 if [ -z "$(command -v nvm)" ]; then
-    read -p "Install node and nvm? [y/n] " sin
+    read -p "Install nvm and node? [y/n] " sin
     if [ $sin == "y" ]; then
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
         source ~/.zshrc 2> /dev/null
-        nvm install node
+        nvm install --lts
         read -p "Install Typescript globaly? [y/n] " sin
         if [ $sin == "y" ]; then
-            npm install -g typescript
+            npm install -g typescript @types/node ts-node
         fi
     fi
 echo $delim
@@ -93,7 +102,7 @@ echo $delim
 if [ -n "$(command -v ghcup)" ]; then
     read -p "Install Haskell? [y/n] " sin
     if [ $sin == "y" ]; then
-        brew install ghcup
+        curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
     fi
     echo $delim
 fi
