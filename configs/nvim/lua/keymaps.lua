@@ -20,7 +20,6 @@ vim.keymap.set("n", "O", 'o<Esc>0"_D', { silent = true, desc = "inserts new empt
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "moves selected text down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "moves selected text up" })
 
-vim.keymap.set("n", "<leader>e", ":Ex<cr>", { silent = true, desc = "[E]xplorer" })
 vim.keymap.set("n", "<leader>w", vim.cmd.w, { silent = true, desc = "[W]rite buffer" })
 vim.keymap.set("i", "<c-j>", "<down>", { silent = true })
 vim.keymap.set("i", "<c-k>", "<up>", { silent = true })
@@ -30,3 +29,26 @@ vim.keymap.set({ "v", "n" }, "p", [["0P]], { silent = true })
 vim.keymap.set({ "v" }, "Y", [["+y]], { silent = true })
 
 vim.keymap.set("n", "<leader><esc>", "<cmd>confirm q<cr>", { silent = true, desc = "[Q]uit buffer" })
+
+vim.keymap.set('n', '<leader>e', function()
+        local reveal_file = vim.fn.expand('%:p')
+        if (reveal_file == '') then
+            reveal_file = vim.fn.getcwd()
+        else
+            local f = io.open(reveal_file, "r")
+            if (f) then
+                f.close(f)
+            else
+                reveal_file = vim.fn.getcwd()
+            end
+        end
+        require('neo-tree.command').execute({
+            action = "focus",          -- OPTIONAL, this is the default value
+            source = "filesystem",     -- OPTIONAL, this is the default value
+            position = "float",        -- OPTIONAL, this is the default value
+            reveal_file = reveal_file, -- path to file or folder to reveal
+            reveal_force_cwd = true,   -- change cwd without asking if needed
+        })
+    end,
+    { desc = "Open neo-tree at current file or working directory" }
+);
