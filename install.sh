@@ -11,8 +11,7 @@ if [ $sin == "y" ]; then
 
     source ~/.zshrc 2> /dev/null
 
-    sudo brew install --cask kitty
-    sudo brew install --cask firefox
+    sudo brew install --cask kitty, firefox, rectangle
     pkgs="lf lazygit fzf tmux neovim jq ripgrep"
     for i in $pkgs; do
         sudo brew install $i
