@@ -42,3 +42,11 @@ vim.opt.incsearch = true
 
 vim.opt.scrolloff = 8
 vim.opt.isfname:append("@-@")
+
+vim.g.netrw_liststyle = 3
+
+vim.g.netrw_browse_split = 0
+vim.g.netrw_winsize = 25
+vim.g.netrw_keepdir = 0
+
+vim.g.copilot_no_tab_map = true
