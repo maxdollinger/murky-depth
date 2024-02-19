@@ -7,6 +7,9 @@ setopt extendedglob nomatch
 unsetopt autocd notify
 bindkey -v
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(zoxide init zsh --cmd cd)"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -17,6 +20,7 @@ source ~/.zsh/settings.zsh
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh
 source ~/.zsh/plugins/catppuccin/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh
+source ~/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f "/home/dollingerm/.ghcup/env" ] && source "/home/dollingerm/.ghcup/env" # ghcup-env
