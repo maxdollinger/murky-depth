@@ -5,9 +5,9 @@ local config = {}
 local function scheme_for_appearance()
 	local appearance = wezterm.gui.get_appearance()
 	if appearance:find("Dark") then
-		config.color_scheme = "Catppuccin Frappe"
+		config.color_scheme = "tokyonight-storm"
 	else
-		config.color_scheme = "Catppuccin Latte"
+		config.color_scheme = "tokyonight-day"
 	end
 end
 
@@ -17,7 +17,7 @@ local act = wezterm.action
 
 config.initial_cols = 200
 config.initial_rows = 50
-config.window_background_opacity = 0.95
+config.window_background_opacity = 0.85
 config.use_fancy_tab_bar = false
 config.font = wezterm.font("FiraCode Nerd Font Mono")
 config.font_size = 13.0

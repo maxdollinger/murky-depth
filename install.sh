@@ -40,9 +40,9 @@ if [ $sin == "y" ]; then
 		git -C https://github.com/maxdollinger/murky-depth.git ~/murky-depth
 	fi
 
-	cp -ar ~/murky-depth/.configs/* ~/.config/
-	cp -ar ~/murky-depth/.ssh/ ~/
-	cp -ar ~/murky-depth/.zsh/ ~/
+	cp -R ~/murky-depth/.configs ~/
+	cp -R ~/murky-depth/.ssh ~/
+	cp -R ~/murky-depth/.zsh ~/
 	cp -a ~/murky-depth/.wezterm.lua ~/
 	cp -a ~/murky-depth/.gitconfig ~/
 
