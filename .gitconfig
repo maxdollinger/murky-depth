@@ -1,0 +1,9 @@
+[core]
+	editor = nvim
+
+[user]
+    name = "-"
+    email = "-"
+
+[init]
+    defaultBranch = "main"
