@@ -7,5 +7,9 @@ return {
     "folke/trouble.nvim",
     "nvim-telescope/telescope.nvim",
   },
-  opts = {},
+  config = function()
+    require("chatgpt").setup({})
+
+    vim.keymap.set("n", "<leader>a", require("chatgpt").openChat, { desc = "Open ChatGPT" })
+  end,
 }
