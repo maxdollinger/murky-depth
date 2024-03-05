@@ -17,9 +17,9 @@ local act = wezterm.action
 
 config.initial_cols = 200
 config.initial_rows = 50
-config.window_background_opacity = 0.85
+config.window_background_opacity = 0.9
 config.use_fancy_tab_bar = false
-config.font = wezterm.font("FiraCode Nerd Font Mono")
+config.font = wezterm.font("FiraCode Nerd Font")
 config.font_size = 13.0
 config.front_end = "WebGpu"
 config.window_decorations = "RESIZE"
@@ -44,20 +44,69 @@ config.keys = {
 		}),
 	},
 	{
+		key = "]",
+		mods = "CMD",
+		action = act.ActivateTabRelative(1),
+	},
+
+	{
 		key = "w",
 		mods = "CMD",
 		action = act.CloseCurrentPane({ confirm = false }),
 	},
 	{
-		key = "v",
-		mods = "OPT",
-		action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+		key = "\\",
+		mods = "CMD",
+		action = act.SplitPane({
+			direction = "Right",
+			size = { Percent = 35 },
+		}),
 	},
 	{
 		key = "h",
 		mods = "OPT",
 		action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
 	},
+	{
+		key = "]",
+		mods = "CMD",
+		action = act.ActivateTabRelative(1),
+	},
+	{
+		key = "[",
+		mods = "CMD",
+		action = act.ActivateTabRelative(1),
+	},
+	{
+		key = "H",
+		mods = "CMD",
+		action = act.ActivatePaneDirection("Left"),
+	},
+	{
+		key = "L",
+		mods = "CMD",
+		action = act.ActivatePaneDirection("Right"),
+	},
+	{
+		key = "L",
+		mods = "CMD",
+		action = act.ActivatePaneDirection("Right"),
+	},
+	{
+		key = "r",
+		mods = "CMD",
+		action = wezterm.action_callback(function(_, pane)
+			pane:send_text("!!\n")
+		end),
+	},
 }
+
+for i = 1, 5 do
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "OPT",
+		action = act.ActivateTab(i - 1),
+	})
+end
 
 return config

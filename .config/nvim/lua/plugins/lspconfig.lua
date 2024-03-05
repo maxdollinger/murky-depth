@@ -3,6 +3,7 @@ return {
   opts = {
     -- make sure mason installs the server
     servers = {
+      zls = {},
       ---@type lspconfig.options.tsserver
       ---@diagnostic disable-next-line: missing-fields
       tsserver = {

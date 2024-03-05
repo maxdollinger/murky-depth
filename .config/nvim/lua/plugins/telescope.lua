@@ -11,6 +11,9 @@ return {
         buffers = {
           initial_mode = "normal",
         },
+        oldfiles = {
+          initial_mode = "normal",
+        },
       },
     },
   },

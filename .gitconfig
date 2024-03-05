@@ -2,8 +2,8 @@
 	editor = nvim
 
 [user]
-    name = "-"
-    email = "-"
+    name = "_"
+    email = "_"
 
 [init]
     defaultBranch = "main"
