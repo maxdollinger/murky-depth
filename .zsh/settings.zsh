@@ -20,15 +20,15 @@ alias lf='lfcd'
 trash() {
     trash_dir="${HOME}/.trash"
 
-   if [ ! -d "$trash_dir" ]; then
+    if [ ! -d "$trash_dir" ]; then
         mkdir "$trash_dir"
-   fi
+    fi
 
-   timestamp=$(date +%s)
-   for arg in "$@"; do
-       name=$(basename "$arg")
-       mv -fv "$arg" "${trash_dir}/${timestamp}_${name}"
-   done
+    timestamp=$(date +%s)
+    for arg in "$@"; do
+        name=$(basename "$arg")
+        mv -fv "$arg" "${trash_dir}/${timestamp}_${name}"
+    done
 }
 
 empty () {
