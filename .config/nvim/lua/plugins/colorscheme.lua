@@ -12,6 +12,9 @@ return {
       on_highlights = function(hl, cl)
         hl.LineNr = { fg = cl.blue5 }
         hl.Visual = { bg = cl.blue0 }
+        hl.DiagnosticUnnecessary = {
+          fg = "#a1a6c4",
+        }
       end,
       on_colors = function(cl)
         cl.bg_statusline = cl.none
