@@ -1,5 +1,16 @@
 alias vim='nvim'
+alias vi='nvim'
 export EDITOR='nvim'
+
+HISTFILE=~/.histfile
+HISTSIZE=5000
+SAVEHIST=5000
+setopt HIST_IGNORE_ALL_DUPS  # do not put duplicated command into history list
+setopt HIST_SAVE_NO_DUPS  # do not save duplicated command
+setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
+setopt EXTENDED_HISTORY # record command start time
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
 
 lfcd () {
     tmp="$(mktemp)"
@@ -35,11 +46,9 @@ empty () {
     find . -name . -o -prune -exec rm -rf -- {} +
 }
 
-
-otmux () {
-    [[ -z $TMUX ]] && (tmux attach || tmux) || echo ''
+hist () {
+    eval fc -s $(fc -l | fzf | awk '{print $1}')
 }
 
-bindkey -s '^t' 'otmux\n'
 bindkey -s '^e' 'lfcd\n'
 bindkey -s '^o' 'nvim\n'
