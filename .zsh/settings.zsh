@@ -45,9 +45,20 @@ empty () {
     find . -name . -o -prune -exec rm -rf -- {} +
 }
 
-hist () {
-    cmd="$(fc -l 0 -1 | fzf --tac --no-sort -q "$*" | awk '{print $1}')"
-    [[ ! -z "$cmd" ]] && fc -s "$cmd"
+hist() {
+	if [[ "$1" == "-c" ]]; then
+		echo "clear history"
+        history -p
+        clear 
+		truncate -s 0 ~/.histfile
+	else
+		cmd="$(fc -l 0 -1 | fzf --tac --no-sort -q "$*" | awk '{print $1}')"
+		[[ ! -z "$cmd" ]] && fc -s "$cmd"
+	fi
+}
+
+rr() {
+	clear && exec zsh
 }
 
 bindkey -s '^e' 'lfcd\n'
