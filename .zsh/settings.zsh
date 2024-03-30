@@ -8,7 +8,6 @@ SAVEHIST=5000
 setopt HIST_IGNORE_ALL_DUPS  # do not put duplicated command into history list
 setopt HIST_SAVE_NO_DUPS  # do not save duplicated command
 setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
-setopt EXTENDED_HISTORY # record command start time
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 
@@ -47,7 +46,8 @@ empty () {
 }
 
 hist () {
-    eval fc -s $(fc -l | fzf | awk '{print $1}')
+    cmd="$(fc -l 0 -1 | fzf --tac --no-sort -q "$*" | awk '{print $1}')"
+    [[ ! -z "$cmd" ]] && fc -s "$cmd"
 }
 
 bindkey -s '^e' 'lfcd\n'
