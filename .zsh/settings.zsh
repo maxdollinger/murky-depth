@@ -51,8 +51,13 @@ hist() {
         history -p
         clear 
 		truncate -s 0 ~/.histfile
-	else
-		cmd="$(fc -l 0 -1 | fzf --tac --no-sort -q "$*" | awk '{print $1}')"
+	elif [[ "$1" == "-e" ]]; then
+        shift
+        rest="$@"
+		cmd="$( fc -rl 1 | awk '{ cmd=$0; sub(/^[ \t]*[0-9]+\**[ \t]+/, "", cmd); if (!seen[cmd]++) print $0 }' | fzf --height=15 --no-sort -q "$rest" | awk '{print $1}')"
+		[[ ! -z "$cmd" ]] && fc "$cmd"
+    else
+		cmd="$( fc -rl 1 | awk '{ cmd=$0; sub(/^[ \t]*[0-9]+\**[ \t]+/, "", cmd); if (!seen[cmd]++) print $0 }' | fzf --height=15 --no-sort -q "$*" | awk '{print $1}')"
 		[[ ! -z "$cmd" ]] && fc -s "$cmd"
 	fi
 }
