@@ -1,20 +1,21 @@
 tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
 brew "fd"
+brew "ffmpeg"
 brew "fzf"
-brew "gnu-sed" if OS.mac?
+brew "gnu-sed"
 brew "go"
 brew "jq"
 brew "lazygit"
 brew "lf"
 brew "neovim"
+brew "python@3.10"
 brew "ripgrep"
-brew "tmux"
+brew "zig"
 brew "zoxide"
 cask "firefox"
-cask "maccy" if OS.mac?
-cask "rectangle" if OS.mac?
-cask "apptivate" if OS.mac? 
+cask "obsidian"
+cask "raspberry-pi-imager"
+cask "raycast"
+cask "rectangle"
 cask "vlc"
 cask "wezterm"
