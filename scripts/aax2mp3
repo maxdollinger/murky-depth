@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+# convert audible aax to mp3
+# GLWTS(Good Luck With That Shit) Public License
+
+# Environment variable
+# AAX2MP3_AUTHCODE=""
+err() {
+	echo -e "$@" 1>&2
+	exit 1
+}
+
+info() {
+	echo ">> $1"
+}
+
+commands=("ffmpeg" "ffprobe" "date" "mktemp" "dirname" "grep" "cut" "sed")
+for cmd in "${commands[@]}"; do
+	if ! command -v "$cmd" &>/dev/null; then
+		err "$cmd not found"
+	fi
+done
+
+inputfile="$1"
+if [ -z "$inputfile" ]; then
+	err "No input file specified! Aborting ..."
+	exit 1
+fi
+output_directory="$(dirname "${inputfile}")"
+
+authcode="$2"
+if [ -z "$authcode" ]; then
+	authcode="$AAX2MP3_AUTHCODE"
+fi
+if [ -z "$authcode" ]; then
+	err "No authcode specified! Aborting ..."
+fi
+
+info "analyzing $inputfile ..."
+
+metadata=$(mktemp)
+ffprobe -i "$inputfile" 2>"$metadata"
+sed -i '' 's/\r$//' "$metadata"
+
+extract_metadata() {
+	grep --max-count=1 --only-matching "${1} *: .*" "$metadata" | cut -d ':' -f2- | sed -e 's/^[[:space:]]*//'
+}
+
+title=$(extract_metadata "title")
+info "* Title: $title"
+
+artist=$(extract_metadata "artist")
+info "* Artist: $artist"
+
+date=$(extract_metadata "date")
+info "* Date: $date"
+
+copyright=$(extract_metadata "copyright")
+info "* Copyright: $copyright"
+
+bitrate=$(extract_metadata "bitrate" | grep --only-matching '[0-9]\+')
+
+rm "$metadata"
+
+cover_path="${output_directory}/cover.jpg"
+info "extracting cover ..."
+if ! ffmpeg -loglevel error -activation_bytes "$authcode" -i "$inputfile" \
+	-an -codec:v copy -y "$cover_path"; then
+	err "failed to extract cover!"
+fi
+
+codec="libmp3lame"
+filename="$(basename "$inputfile" | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g' | sed 's/aax/mp3/')"
+full_file_path="${output_directory}/${filename}"
+info "converting -> $filename"
+if ! </dev/null ffmpeg -loglevel error -stats -activation_bytes "$authcode" -i "$inputfile" -i "$cover_path" \
+	-codec:a "$codec" -ab "${bitrate}k" -y \
+	-map 0:0 -map 1:0 -id3v2_version 3 -map_metadata 0 -metadata artist="$artist" -metadata title="$title" \
+	-metadata album_artist="$artist" -metadata album="$title" -metadata track="1/1" \
+	-metadata copyright="$copyright" -metadata date="$date" \
+	"$full_file_path"; then
+	rm "$cover_path"
+	err "failed to convert $inputfile!"
+fi
+
+rm "$cover_path"
+
+info "Done."
+exit 0

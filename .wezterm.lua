@@ -75,7 +75,7 @@ config.keys = {
 	{
 		key = "[",
 		mods = "CMD",
-		action = act.ActivateTabRelative(1),
+		action = act.ActivateTabRelative(-1),
 	},
 	{
 		key = "H",
