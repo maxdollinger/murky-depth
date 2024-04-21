@@ -70,7 +70,7 @@ if ! ffmpeg -loglevel error -activation_bytes "$authcode" -i "$inputfile" \
 fi
 
 codec="libmp3lame"
-filename="$(basename "$inputfile" | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g' | sed 's/aax/mp3/')"
+filename="$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed 's/[[:space:]-]/_/g' | tr -cd '[:alnum:]_').mp3"
 full_file_path="${output_directory}/${filename}"
 info "converting -> $filename"
 if ! </dev/null ffmpeg -loglevel error -stats -activation_bytes "$authcode" -i "$inputfile" -i "$cover_path" \
